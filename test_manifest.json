@@ -1,0 +1,448 @@
+{
+  "metadata": {
+    "dbt_schema_version": "https://schemas.getdbt.com/dbt/manifest/v7.json",
+    "dbt_version": "1.6.0",
+    "generated_at": "2025-12-05T18:35:03.865931Z",
+    "invocation_id": "test-invocation-123",
+    "env": {},
+    "project_name": "test_dbt_project",
+    "project_id": "abc123"
+  },
+  "nodes": {
+    "model.test_dbt_project.customers": {
+      "database": "analytics",
+      "schema": "public",
+      "name": "customers",
+      "resource_type": "model",
+      "package_name": "test_dbt_project",
+      "path": "models/customers.sql",
+      "original_file_path": "models/customers.sql",
+      "unique_id": "model.test_dbt_project.customers",
+      "fqn": [
+        "test_dbt_project",
+        "customers"
+      ],
+      "alias": "customers",
+      "checksum": {
+        "name": "sha256",
+        "checksum": "abc123"
+      },
+      "config": {},
+      "tags": [],
+      "description": "Customer dimension table",
+      "columns": {
+        "customer_id": {
+          "name": "customer_id",
+          "description": "Primary key",
+          "meta": {},
+          "data_type": "integer",
+          "quote": null,
+          "tags": []
+        },
+        "customer_name": {
+          "name": "customer_name",
+          "description": "Customer name",
+          "meta": {},
+          "data_type": "varchar",
+          "quote": null,
+          "tags": []
+        }
+      },
+      "meta": {},
+      "group": null,
+      "docs": {
+        "show": true
+      },
+      "patch_path": null,
+      "build_path": null,
+      "deferred": false,
+      "unrendered_config": {},
+      "created_at": 1701446400.0,
+      "relation_name": "analytics.public.customers",
+      "raw_code": "select * from raw_customers",
+      "language": "sql",
+      "refs": [],
+      "sources": [
+        [
+          "raw_data",
+          "raw_customers"
+        ]
+      ],
+      "metrics": [],
+      "depends_on": {
+        "macros": [],
+        "nodes": [
+          "source.test_dbt_project.raw_data.raw_customers"
+        ]
+      },
+      "compiled_path": null,
+      "compiled": true,
+      "compiled_code": "select * from raw_customers",
+      "extra_ctes_injected": false,
+      "extra_ctes": [],
+      "contract": {
+        "enforced": false
+      }
+    },
+    "model.test_dbt_project.orders": {
+      "database": "analytics",
+      "schema": "public",
+      "name": "orders",
+      "resource_type": "model",
+      "package_name": "test_dbt_project",
+      "path": "models/orders.sql",
+      "original_file_path": "models/orders.sql",
+      "unique_id": "model.test_dbt_project.orders",
+      "fqn": [
+        "test_dbt_project",
+        "orders"
+      ],
+      "alias": "orders",
+      "checksum": {
+        "name": "sha256",
+        "checksum": "def456"
+      },
+      "config": {},
+      "tags": [],
+      "description": "Orders fact table",
+      "columns": {
+        "order_id": {
+          "name": "order_id",
+          "description": "Primary key",
+          "meta": {},
+          "data_type": "integer",
+          "quote": null,
+          "tags": []
+        },
+        "customer_id": {
+          "name": "customer_id",
+          "description": "Foreign key to customers",
+          "meta": {},
+          "data_type": "integer",
+          "quote": null,
+          "tags": []
+        },
+        "order_total": {
+          "name": "order_total",
+          "description": "Total order amount",
+          "meta": {},
+          "data_type": "decimal",
+          "quote": null,
+          "tags": []
+        },
+        "order_date": {
+          "name": "order_date",
+          "description": "Order date",
+          "meta": {},
+          "data_type": "date",
+          "quote": null,
+          "tags": []
+        }
+      },
+      "meta": {},
+      "group": null,
+      "docs": {
+        "show": true
+      },
+      "patch_path": null,
+      "build_path": null,
+      "deferred": false,
+      "unrendered_config": {},
+      "created_at": 1701446400.0,
+      "relation_name": "analytics.public.orders",
+      "raw_code": "select * from raw_orders join customers using (customer_id)",
+      "language": "sql",
+      "refs": [
+        [
+          "customers"
+        ]
+      ],
+      "sources": [
+        [
+          "raw_data",
+          "raw_orders"
+        ]
+      ],
+      "metrics": [],
+      "depends_on": {
+        "macros": [],
+        "nodes": [
+          "model.test_dbt_project.customers",
+          "source.test_dbt_project.raw_data.raw_orders"
+        ]
+      },
+      "compiled_path": null,
+      "compiled": true,
+      "compiled_code": "select * from raw_orders join customers using (customer_id)",
+      "extra_ctes_injected": false,
+      "extra_ctes": [],
+      "contract": {
+        "enforced": false
+      }
+    }
+  },
+  "sources": {
+    "source.test_dbt_project.raw_data.raw_customers": {
+      "database": "analytics",
+      "schema": "raw",
+      "name": "raw_customers",
+      "resource_type": "source",
+      "package_name": "test_dbt_project",
+      "path": "models/sources.yml",
+      "original_file_path": "models/sources.yml",
+      "unique_id": "source.test_dbt_project.raw_data.raw_customers",
+      "fqn": [
+        "test_dbt_project",
+        "raw_data",
+        "raw_customers"
+      ],
+      "source_name": "raw_data",
+      "source_description": "Raw data from operational systems",
+      "loader": "fivetran",
+      "identifier": "raw_customers",
+      "quoting": {},
+      "loaded_at_field": null,
+      "freshness": {},
+      "external": null,
+      "description": "Raw customer data",
+      "columns": {},
+      "meta": {},
+      "source_meta": {},
+      "tags": [],
+      "config": {},
+      "patch_path": null,
+      "unrendered_config": {},
+      "relation_name": "analytics.raw.raw_customers",
+      "created_at": 1701446400.0
+    },
+    "source.test_dbt_project.raw_data.raw_orders": {
+      "database": "analytics",
+      "schema": "raw",
+      "name": "raw_orders",
+      "resource_type": "source",
+      "package_name": "test_dbt_project",
+      "path": "models/sources.yml",
+      "original_file_path": "models/sources.yml",
+      "unique_id": "source.test_dbt_project.raw_data.raw_orders",
+      "fqn": [
+        "test_dbt_project",
+        "raw_data",
+        "raw_orders"
+      ],
+      "source_name": "raw_data",
+      "source_description": "Raw data from operational systems",
+      "loader": "fivetran",
+      "identifier": "raw_orders",
+      "quoting": {},
+      "loaded_at_field": null,
+      "freshness": {},
+      "external": null,
+      "description": "Raw order data",
+      "columns": {},
+      "meta": {},
+      "source_meta": {},
+      "tags": [],
+      "config": {},
+      "patch_path": null,
+      "unrendered_config": {},
+      "relation_name": "analytics.raw.raw_orders",
+      "created_at": 1701446400.0
+    }
+  },
+  "metrics": {
+    "metric.test_dbt_project.total_revenue": {
+      "name": "total_revenue",
+      "resource_type": "metric",
+      "package_name": "test_dbt_project",
+      "path": "models/metrics.yml",
+      "original_file_path": "models/metrics.yml",
+      "unique_id": "metric.test_dbt_project.total_revenue",
+      "fqn": [
+        "test_dbt_project",
+        "total_revenue"
+      ],
+      "description": "Total revenue across all orders",
+      "label": "Total Revenue",
+      "calculation_method": "sum",
+      "expression": "order_total",
+      "timestamp": "order_date",
+      "time_grains": [
+        "day",
+        "week",
+        "month",
+        "quarter",
+        "year"
+      ],
+      "dimensions": [
+        "customer_id"
+      ],
+      "filters": [],
+      "meta": {
+        "datahub_glossary_category": "Finance/Revenue"
+      },
+      "tags": [
+        "revenue",
+        "finance"
+      ],
+      "config": {},
+      "unrendered_config": {},
+      "created_at": 1701446400.0,
+      "depends_on": {
+        "macros": [],
+        "nodes": [
+          "model.test_dbt_project.orders"
+        ]
+      },
+      "refs": [
+        [
+          "orders"
+        ]
+      ],
+      "sources": [],
+      "metrics": []
+    },
+    "metric.test_dbt_project.customer_count": {
+      "name": "customer_count",
+      "resource_type": "metric",
+      "package_name": "test_dbt_project",
+      "path": "models/metrics.yml",
+      "original_file_path": "models/metrics.yml",
+      "unique_id": "metric.test_dbt_project.customer_count",
+      "fqn": [
+        "test_dbt_project",
+        "customer_count"
+      ],
+      "description": "Total number of unique customers",
+      "label": "Customer Count",
+      "calculation_method": "count_distinct",
+      "expression": "customer_id",
+      "timestamp": "order_date",
+      "time_grains": [
+        "day",
+        "week",
+        "month"
+      ],
+      "dimensions": [],
+      "filters": [],
+      "meta": {
+        "datahub_glossary_category": "Customer/Engagement"
+      },
+      "tags": [
+        "customer",
+        "count"
+      ],
+      "config": {},
+      "unrendered_config": {},
+      "created_at": 1701446400.0,
+      "depends_on": {
+        "macros": [],
+        "nodes": [
+          "model.test_dbt_project.orders"
+        ]
+      },
+      "refs": [
+        [
+          "orders"
+        ]
+      ],
+      "sources": [],
+      "metrics": []
+    },
+    "metric.test_dbt_project.avg_order_value": {
+      "name": "avg_order_value",
+      "resource_type": "metric",
+      "package_name": "test_dbt_project",
+      "path": "models/metrics.yml",
+      "original_file_path": "models/metrics.yml",
+      "unique_id": "metric.test_dbt_project.avg_order_value",
+      "fqn": [
+        "test_dbt_project",
+        "avg_order_value"
+      ],
+      "description": "Average value per order",
+      "label": "Average Order Value (AOV)",
+      "calculation_method": "average",
+      "expression": "order_total",
+      "timestamp": "order_date",
+      "time_grains": [
+        "week",
+        "month",
+        "quarter"
+      ],
+      "dimensions": [
+        "customer_id"
+      ],
+      "filters": [
+        {
+          "field": "order_total",
+          "operator": ">",
+          "value": "0"
+        }
+      ],
+      "meta": {
+        "datahub_glossary_category": "Finance/Metrics",
+        "owner": "finance_team"
+      },
+      "tags": [
+        "revenue",
+        "finance",
+        "kpi"
+      ],
+      "config": {},
+      "unrendered_config": {},
+      "created_at": 1701446400.0,
+      "depends_on": {
+        "macros": [],
+        "nodes": [
+          "model.test_dbt_project.orders"
+        ]
+      },
+      "refs": [
+        [
+          "orders"
+        ]
+      ],
+      "sources": [],
+      "metrics": []
+    }
+  },
+  "macros": {},
+  "docs": {},
+  "exposures": {},
+  "selectors": {},
+  "disabled": {},
+  "parent_map": {
+    "model.test_dbt_project.customers": [
+      "source.test_dbt_project.raw_data.raw_customers"
+    ],
+    "model.test_dbt_project.orders": [
+      "model.test_dbt_project.customers",
+      "source.test_dbt_project.raw_data.raw_orders"
+    ],
+    "metric.test_dbt_project.total_revenue": [
+      "model.test_dbt_project.orders"
+    ],
+    "metric.test_dbt_project.customer_count": [
+      "model.test_dbt_project.orders"
+    ],
+    "metric.test_dbt_project.avg_order_value": [
+      "model.test_dbt_project.orders"
+    ]
+  },
+  "child_map": {
+    "source.test_dbt_project.raw_data.raw_customers": [
+      "model.test_dbt_project.customers"
+    ],
+    "source.test_dbt_project.raw_data.raw_orders": [
+      "model.test_dbt_project.orders"
+    ],
+    "model.test_dbt_project.customers": [
+      "model.test_dbt_project.orders"
+    ],
+    "model.test_dbt_project.orders": [
+      "metric.test_dbt_project.total_revenue",
+      "metric.test_dbt_project.customer_count",
+      "metric.test_dbt_project.avg_order_value"
+    ]
+  }
+}

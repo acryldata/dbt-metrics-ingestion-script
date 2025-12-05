@@ -1,0 +1,111 @@
+# Example dbt Metrics Configuration
+# Place this in your dbt project: models/metrics/your_metrics.yml
+
+version: 2
+
+metrics:
+  # Simple metric example
+  - name: revenue_total
+    label: Total Revenue
+    description: |
+      Total revenue across all channels and products.
+      This is our primary revenue metric used for executive reporting.
+    type: simple
+    type_params:
+      measure: revenue_amount
+    meta:
+      datahub_glossary_category: Finance
+      owner: finance-team
+      business_unit: Revenue Operations
+    tags:
+      - finance
+      - kpi
+      - executive
+
+  # Ratio metric example
+  - name: profit_margin
+    label: Profit Margin %
+    description: |
+      Percentage profit margin calculated as (Revenue - Cost) / Revenue * 100.
+      Used to track profitability across products and regions.
+    type: ratio
+    type_params:
+      numerator: profit
+      denominator: revenue
+    meta:
+      datahub_glossary_category: Finance
+      owner: finance-team
+      format: percentage
+    tags:
+      - finance
+      - kpi
+
+  # Derived metric with filters and dimensions
+  - name: active_customer_count
+    label: Active Customers
+    description: |
+      Count of distinct customers who made a purchase in the last 30 days.
+      Filtered to exclude test accounts and internal users.
+    type: simple
+    type_params:
+      measure: customer_id
+      expr: count_distinct
+    filters:
+      - field: last_purchase_date
+        operator: '>='
+        value: "{{ dbt.dateadd('day', -30, 'current_date') }}"
+      - field: is_test_account
+        operator: '='
+        value: false
+    time_grains:
+      - day
+      - week
+      - month
+    dimensions:
+      - region
+      - customer_segment
+      - acquisition_channel
+    meta:
+      datahub_glossary_category: Marketing
+      owner: growth-team
+      refresh_frequency: daily
+    tags:
+      - marketing
+      - customers
+      - growth
+
+  # Cumulative metric example
+  - name: cumulative_revenue
+    label: Cumulative Revenue
+    description: |
+      Running total of revenue since the beginning of the fiscal year.
+      Resets at the start of each fiscal year.
+    type: cumulative
+    type_params:
+      measure: revenue_amount
+    meta:
+      datahub_glossary_category: Finance
+      owner: finance-team
+      reset_period: fiscal_year
+    tags:
+      - finance
+      - trending
+
+  # Metric without category (goes to "Uncategorized")
+  - name: page_views_total
+    label: Total Page Views
+    description: Count of all page views across the website
+    type: simple
+    type_params:
+      measure: page_view_id
+      expr: count
+    tags:
+      - analytics
+      - website
+
+# Notes:
+# 1. The `meta.datahub_glossary_category` field controls glossary placement in DataHub
+# 2. All other `meta.*` fields become custom properties in DataHub GlossaryTerms
+# 3. Tags are preserved and added to the GlossaryTerm in DataHub
+# 4. Filters, dimensions, and time_grains are captured in custom properties
+# 5. The `type` field helps classify metrics (simple, ratio, derived, cumulative)

@@ -1,0 +1,7 @@
+# Requirements for dbt Metrics to DataHub Ingestion Script
+
+# DataHub Python SDK
+acryl-datahub>=0.12.0
+
+# Optional: If you want to use environment variables for config
+python-dotenv>=1.0.0
